@@ -99,7 +99,7 @@
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${user.role == 'admin' || mapStatus[product.prodNo] == '판매중'}">
+							<c:when test="${user.role == 'admin' || product.proTranCode == '판매중'}">
 								<a href="/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 							</c:when>
 							<c:otherwise>
@@ -114,8 +114,8 @@
 			<td></td>
 			<td align="left">${product.regDate}</td>
 			<td></td>
-			<td align="left">${mapStatus[product.prodNo]} 
-				<c:if test="${param.menu == 'manage' && mapStatus[product.prodNo] == '구매완료'}">
+			<td align="left">${product.proTranCode} 
+				<c:if test="${param.menu == 'manage' && product.proTranCode == '구매완료'}">
 					<a href="/updateTranCodeByProd.do?prodNo=${product.prodNo}&tranCode=2">배송하기</a>
 				</c:if>
 			</td>

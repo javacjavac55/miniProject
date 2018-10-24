@@ -61,14 +61,16 @@ public class ProductDAO {
 	public Map<String,Object> getProductList(Search search) throws Exception {
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "SELECT * FROM product";
+		String sql = "SELECT p.prod_no AS p_prod_no,p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date AS p_reg_date,t.tran_status_code"
+				+ " FROM product p,transaction t"
+				+ " WHERE p.prod_no=t.prod_no(+)";
 		if (search.getSearchCondition() != null) {
 			if (search.getSearchCondition().equals("0")) {
-				sql += " WHERE prod_no LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
+				sql += " AND p.prod_no LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
 			} else if (search.getSearchCondition().equals("1")) {
-				sql += " WHERE prod_name LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
+				sql += " AND prod_name LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
 			} else if (search.getSearchCondition().equals("2")) {
-				sql += " WHERE price LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
+				sql += " AND price LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
 			}
 		}
 		if (search.getSortCondition() != null) {
@@ -80,7 +82,7 @@ public class ProductDAO {
 				sql += " ORDER BY price DESC";
 			}
 		} else {
-			sql += " ORDER BY prod_no";
+			sql += " ORDER BY p.prod_no";
 		}
 		System.out.println("ProductDAO::Original SQL :: "+sql);
 		
@@ -91,41 +93,28 @@ public class ProductDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		
-		//for status
-		HashMap<Integer, String> mapStatus = new HashMap<Integer, String>();
-		String sqlStatus = "SELECT tran_status_code FROM transaction WHERE prod_no=?";
-		PreparedStatement stmtStatus = con.prepareStatement(sqlStatus);
-		//
-		
 		List<Product> list = new ArrayList<Product>();
 		while (rs.next()) {
 			Product product = new Product();
-			int prodNo = rs.getInt("PROD_NO");
+			int prodNo = rs.getInt("P_PROD_NO");
 			product.setProdNo(prodNo);
 			product.setProdName(rs.getString("PROD_NAME"));
 			product.setProdDetail(rs.getString("PROD_DETAIL"));
 			product.setManuDate(rs.getString("MANUFACTURE_DAY"));
 			product.setPrice(rs.getInt("PRICE"));
 			product.setFileName(rs.getString("IMAGE_FILE"));
-			product.setRegDate(rs.getDate("REG_DATE"));
-			list.add(product);
-			
-			//for status
-			stmtStatus.setInt(1, prodNo);
-			ResultSet rsStatus = stmtStatus.executeQuery();
-			if (rsStatus.next())
-				mapStatus.put(prodNo, getTranCodeStr(rsStatus.getString("tran_status_code")));
+			product.setRegDate(rs.getDate("P_REG_DATE"));
+			if (rs.getString("tran_status_code")!=null)
+				product.setProTranCode(getTranCodeStr(rs.getString("tran_status_code")));
 			else
-				mapStatus.put(prodNo, getTranCodeStr("0"));
-			//
+				product.setProTranCode(getTranCodeStr("0"));
+			
+			list.add(product);
 		}
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("totalCount", new Integer(totalCount));
 		map.put("list", list);
-		//for status
-		map.put("mapStatus",mapStatus);
-		//
 		
 		rs.close();
 		stmt.close();

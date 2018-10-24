@@ -95,7 +95,7 @@
 			<td></td>
 			<td align="left">
 				<c:choose>
-					<c:when test="${mapStatus[product.prodNo] == '판매중'}">
+					<c:when test="${product.proTranCode == '판매중'}">
 						<a href="/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 					</c:when>
 					<c:otherwise>
@@ -108,7 +108,7 @@
 			<td></td>
 			<td align="left">${product.prodDetail}</td>
 			<td></td>
-			<td align="left">${mapStatus[product.prodNo] == '판매중' ? '판매중':'재고 없음'}</td>
+			<td align="left">${product.proTranCode == '판매중' ? '판매중':'재고 없음'}</td>
 		</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
