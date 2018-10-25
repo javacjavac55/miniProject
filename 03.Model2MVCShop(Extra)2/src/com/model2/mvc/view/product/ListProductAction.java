@@ -25,6 +25,7 @@ public class ListProductAction extends Action {
 		search.setCurrentPage(currentPage);
 		search.setSearchCondition(request.getParameter("searchCondition"));
 		search.setSearchKeyword(request.getParameter("searchKeyword"));
+		search.setFilterCondition(request.getParameter("filterCondition"));
 		search.setSortCondition(request.getParameter("sortCondition"));
 		System.out.println("ListProductAction:::searchKeyword: "+request.getParameter("searchKeyword"));
 		
@@ -38,7 +39,6 @@ public class ListProductAction extends Action {
 		Page resultPage	= new Page(currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		request.setAttribute("list", map.get("list"));
-		request.setAttribute("mapStatus", map.get("mapStatus"));
 		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
 		

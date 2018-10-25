@@ -73,16 +73,26 @@ public class ProductDAO {
 				sql += " AND price LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
 			}
 		}
+		System.out.println("search.getFilterCondition(): "+search.getFilterCondition());
+		if (search.getFilterCondition() != null) {
+			if (search.getFilterCondition().equals("0")) {
+				sql += " AND tran_status_code IS NULL";
+			} else if (search.getFilterCondition().equals("4")){
+				//no filter
+			} else {
+				sql += " AND tran_status_code='"+search.getFilterCondition()+"'";
+			}
+		}
 		if (search.getSortCondition() != null) {
 			if (search.getSortCondition().equals("0")) {
-				sql += " ORDER BY reg_date";
+				sql += " ORDER BY reg_date DESC";
 			} else if (search.getSortCondition().equals("1")) {
 				sql += " ORDER BY price";
 			} else if (search.getSortCondition().equals("2")) {
 				sql += " ORDER BY price DESC";
 			}
 		} else {
-			sql += " ORDER BY p.prod_no";
+			sql += " ORDER BY p.prod_no DESC";
 		}
 		System.out.println("ProductDAO::Original SQL :: "+sql);
 		

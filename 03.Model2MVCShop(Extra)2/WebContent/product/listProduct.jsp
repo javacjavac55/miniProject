@@ -43,6 +43,13 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="right">
+			<select name="filterCondition" class="ct_input_g" style="width:80px" onchange="javascript:fncGetItemList('1');">
+				<option value="4" ${!empty search.filterCondition && search.filterCondition == "4" ? 'selected' : ''}>모든 상품</option>
+				<option value="0" ${!empty search.filterCondition && search.filterCondition == "0" ? 'selected' : ''}>판매중</option>
+				<option value="1" ${!empty search.filterCondition && search.filterCondition == "1" ? 'selected' : ''}>구매완료</option>
+				<option value="2" ${!empty search.filterCondition && search.filterCondition == "2" ? 'selected' : ''}>배송중</option>
+				<option value="3" ${!empty search.filterCondition && search.filterCondition == "3" ? 'selected' : ''}>배송완료</option>
+			</select>
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
 				<option value="0" ${!empty search.searchCondition && search.searchCondition == "0" ? 'selected' : ''}>상품번호</option>
 				<option value="1" ${!empty search.searchCondition && search.searchCondition == "1" ? 'selected' : ''}>상품명</option>

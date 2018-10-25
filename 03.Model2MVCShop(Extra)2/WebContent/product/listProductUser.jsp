@@ -38,17 +38,19 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="right">
+			<select name="filterCondition" class="ct_input_g" style="width:80px" onchange="javascript:fncGetItemList('1');">
+				<option value="4" ${!empty search.filterCondition && search.filterCondition == "4" ? 'selected' : ''}>모든 상품</option>
+				<option value="0" ${!empty search.filterCondition && search.filterCondition == "0" ? 'selected' : ''}>판매중</option>
+			</select>
 			<select name="sortCondition" class="ct_input_g" style="width:100px" onchange="javascript:fncGetItemList('1');">
 				<option value="0" ${!empty search.sortCondition && search.sortCondition == "0" ? 'selected' : ''}>신상품순</option>
 				<option value="1" ${!empty search.sortCondition && search.sortCondition == "1" ? 'selected' : ''}>낮은가격순</option>
 				<option value="2" ${!empty search.sortCondition && search.sortCondition == "2" ? 'selected' : ''}>높은가격순</option>
 			</select>
-			
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
 				<option value="1" ${!empty search.searchCondition && search.searchCondition == "1" ? 'selected' : ''}>상품명</option>
 				<option value="2" ${!empty search.searchCondition && search.searchCondition == "2" ? 'selected' : ''}>상품가격</option>
 			</select>
-			
 			<input type="text" name="searchKeyword" value="${!empty search.searchKeyword ? search.searchKeyword : ''}" class="ct_input_g" style="width:200px; height:19px" />
 		</td>
 		<td align="right" width="70">

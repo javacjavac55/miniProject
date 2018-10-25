@@ -9,6 +9,7 @@ public class Search {
 	private String searchKeyword;
 	private int pageSize;
 	private String sortCondition;
+	private String filterCondition;
 	
 	///Constructor
 	public Search() {
@@ -50,10 +51,30 @@ public class Search {
 		this.sortCondition = sortCondition;
 	}
 
+	public String getFilterCondition() {
+		return filterCondition;
+	}
+
+	public void setFilterCondition(String filterCondition) {
+		this.filterCondition = filterCondition;
+	}
+
 	@Override
 	public String toString() {
-		return "Search [curruntPage=" + curruntPage + ", searchCondition="
-				+ searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", pageSize=" + pageSize + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Search [curruntPage=");
+		builder.append(curruntPage);
+		builder.append(", searchCondition=");
+		builder.append(searchCondition);
+		builder.append(", searchKeyword=");
+		builder.append(searchKeyword);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
+		builder.append(", sortCondition=");
+		builder.append(sortCondition);
+		builder.append(", filterCondition=");
+		builder.append(filterCondition);
+		builder.append("]");
+		return builder.toString();
 	}
 }
