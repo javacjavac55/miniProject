@@ -45,7 +45,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", purchaseDao.getPurchaseList(search, buyerId));
-		map.put("totalCount", purchaseDao.getTotalCount(search, buyerId));
+		map.put("totalCount", purchaseDao.getTotalCount(buyerId));
 		return map;
 	}
 

@@ -107,7 +107,7 @@
 	</select>
 
 	<!-- SQL : SELECT ROW Count -->
-	<select id="getTotalCount" parameterType="map" resultType="int">
+	<select id="getTotalCount" parameterType="java.lang.String" resultType="int">
 		SELECT COUNT(*)
 		FROM(  SELECT u.user_id,u.user_name,u.password,u.role,u.ssn,u.cell_phone,u.addr,u.email,u.reg_date AS u_reg_date,
 					p.prod_no AS p_prod_no,p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date AS p_reg_date,
