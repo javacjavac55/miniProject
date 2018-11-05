@@ -12,7 +12,7 @@
 </script>
 
 	<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-			<a href="javascript:fncGetItemList('${ resultPage.currentPage-1}')">◀ 이전</a>
+			<a href="javascript:fncGetItemList('${ resultPage.beginUnitPage-1}')">◀ 이전</a>
 	</c:if>
 	
 	<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">

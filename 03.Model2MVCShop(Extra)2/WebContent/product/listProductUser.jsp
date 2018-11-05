@@ -1,12 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>        
 
 <html><head>
 
 <title>상품 목록조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
+<script>
+<!--
+function showInputField(){
+	document.getElementById("minPrice").value = '';
+	document.getElementById("maxPrice").value = '';
+	document.getElementById("searchKeyword").value = '';
+	if (document.getElementById("searchCondition").value == '1'){
+		document.getElementById("priceInput").style.display="none";
+		document.getElementById("searchKeyword").style.display="inline";
+	}
+	
+	if (document.getElementById("searchCondition").value == '2'){
+		document.getElementById("priceInput").style.display="inline";
+		document.getElementById("searchKeyword").style.display="none";
+	}
+}
+
+function checkPriceInput(){
+	if (document.getElementById("searchCondition").value != '2') {
+		fncGetItemList('1');
+		return;
+	}
+	
+	if (document.getElementById("minPrice").value != null && document.getElementById("minPrice").value.length>0 &&
+			document.getElementById("maxPrice").value != null && document.getElementById("maxPrice").value.length>0
+			&& document.getElementById("minPrice").value<=document.getElementById("maxPrice").value) {
+		document.getElementById("searchKeyword").value = document.getElementById("minPrice").value+"-"+document.getElementById("maxPrice").value;
+		fncGetItemList('1');
+		return;
+	}
+	
+	alert("알맞은 가격 범위를 지정해주세요");
+}
+-->
+</script>
 
 </head>
 
@@ -47,12 +83,17 @@
 				<option value="1" ${!empty search.sortCondition && search.sortCondition == "1" ? 'selected' : ''}>낮은가격순</option>
 				<option value="2" ${!empty search.sortCondition && search.sortCondition == "2" ? 'selected' : ''}>높은가격순</option>
 			</select>
-			<select name="searchCondition" class="ct_input_g" style="width:80px">
+			<select name="searchCondition" id="searchCondition" class="ct_input_g" style="width:80px" onchange="javascript:showInputField();">
 				<option value="1" ${!empty search.searchCondition && search.searchCondition == "1" ? 'selected' : ''}>상품명</option>
 				<option value="2" ${!empty search.searchCondition && search.searchCondition == "2" ? 'selected' : ''}>상품가격</option>
 			</select>
-			<input type="text" name="searchKeyword" value="${!empty search.searchKeyword ? search.searchKeyword : ''}" class="ct_input_g" style="width:200px; height:19px" />
-		</td>
+			<input type="text" name="searchKeyword" id="searchKeyword" value="${!empty search.searchKeyword ? search.searchKeyword : ''}" class="ct_input_g" style="width:200px; height:19px; display:${search.searchCondition == '2' ? 'none':'inline'}" />
+			<div id="priceInput" style="display:${!empty search.searchKeyword && search.searchCondition == '2' ? 'inline' : 'none'}" align="right" width="210">
+				<input type="text" name="minPrice" id="minPrice" value="${!empty search.searchKeyword ? fn:split(search.searchKeyword, '-')[0] : ''}" class="ct_input_g" style="width:100px; height:19px"/>
+				-
+				<input type="text" name="maxPrice" id="maxPrice" value="${!empty search.searchKeyword ? fn:split(search.searchKeyword, '-')[1] : ''}" class="ct_input_g" style="width:100px; height:19px"/>
+			</div>
+		</td>		
 		<td align="right" width="70">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -60,7 +101,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetItemList('1');">검색</a>
+						<a href="javascript:checkPriceInput();">검색</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">

@@ -19,6 +19,7 @@ public class GetUserAction extends Action{
 		UserService userService=new UserServiceImpl();
 		User user=userService.getUser(userId);
 		
+		System.out.println("userId: "+((User)request.getSession().getAttribute("user")).getUserId());
 		request.setAttribute("user", user);
 		
 		return "forward:/user/getUser.jsp";

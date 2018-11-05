@@ -101,7 +101,7 @@
 			<td></td>
 			<td align="left">
 				<c:choose>
-					<c:when test="${param.menu == 'manage'}">
+					<c:when test="${param.menu == 'manage' && product.proTranCode == 'ÆÇ¸ÅÁß'}">
 					<a href="/updateProductView.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 					</c:when>
 					<c:otherwise>

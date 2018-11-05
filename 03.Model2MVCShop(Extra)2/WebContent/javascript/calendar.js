@@ -4,7 +4,8 @@
 		   var arr_months = ["1월", "2월", "3월", "4월", "5월", "6월","7월", "8월", "9월", "10월", "11월", "12월"]; 
 	        var week_days = ["월", "화", "수", "목", "금", "토", "일"]; 
 	        var n_weekstart = 0; 
-	
+	        alert("1.dt_datetime: ");
+	        alert("1.dt_datetime: "+str_datetime);
 	        var dt_datetime = ((str_datetime ==null||str_datetime=="")? new Date():tuning2dt(str_datetime,str_target));
 	        
 	        if(dt_datetime == false)
@@ -135,8 +136,8 @@
 		}
 
 		function str2dt (str_datetime,str_target)
-		{
-			var re_date = /^(\d+)\-(\d+)\-(\d+)$/; 
+		{	
+			var re_date = /^(\d+)-(\d+)-(\d+)$/; 
 	        if (!re_date.exec(str_datetime))
 				return errorTurn("날짜 형식이 잘못 되었습니다. 형식('YYYYMMDD')",str_target); 
 
@@ -157,7 +158,7 @@
 			if(mo.indexOf('0')==0) mo = mo.substr(1,1);
 			if(dy.indexOf('0')==0) dy = dy.substr(1,1);
 			
-			return (str2dt(new String(""+yr+"-"+mo+"-"+dy+""),str_target));
+			return (str2dt(new String(""+yr+mo+dy+""),str_target));
 		}
 		
 		function tuning (dt_datetime)

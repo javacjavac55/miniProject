@@ -27,6 +27,7 @@ public class UpdateUserAction extends Action {
 		UserService userService=new UserServiceImpl();
 		userService.updateUser(user);
 		
+		user=userService.getUser(userId);
 		HttpSession session=request.getSession();
 		String sessionId=((User)session.getAttribute("user")).getUserId();
 		

@@ -36,7 +36,7 @@ public class ProductDAO {
 	public Product findProduct(int prodNo) throws Exception {
 		Connection con = DBUtil.getConnection();
 
-		String sql = "select * from PRODUCT where PROD_NO=?";
+		String sql = "SELECT * FROM product WHERE prod_no=?";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, prodNo);
@@ -70,7 +70,7 @@ public class ProductDAO {
 			} else if (search.getSearchCondition().equals("1")) {
 				sql += " AND prod_name LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
 			} else if (search.getSearchCondition().equals("2")) {
-				sql += " AND price LIKE '%'||'" + search.getSearchKeyword() + "'||'%'";
+				sql += " AND price BETWEEN " + search.getSearchKeyword().split("-")[0] + " AND " + search.getSearchKeyword().split("-")[1];
 			}
 		}
 		System.out.println("search.getFilterCondition(): "+search.getFilterCondition());
@@ -85,7 +85,7 @@ public class ProductDAO {
 		}
 		if (search.getSortCondition() != null) {
 			if (search.getSortCondition().equals("0")) {
-				sql += " ORDER BY reg_date DESC";
+				sql += " ORDER BY p.prod_no DESC";
 			} else if (search.getSortCondition().equals("1")) {
 				sql += " ORDER BY price";
 			} else if (search.getSortCondition().equals("2")) {

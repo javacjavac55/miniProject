@@ -60,7 +60,9 @@
 				<a href="/getPurchase.do?tranNo=${purchase.tranNo}">${i}</a>
 			</td>
 			<td></td>
-			<td align="left">${purchase.purchaseProd.prodName}</td>
+			<td align="left">
+				<a href="/getProduct.do?prodNo=${purchase.purchaseProd.prodNo}&menu=view">${purchase.purchaseProd.prodName}</a>
+			</td>
 			<td></td>
 			<td align="left">
 				<a href="/getUser.do?userId=${purchase.buyer.userId}">${purchase.buyer.userName}</a>
