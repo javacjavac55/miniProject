@@ -15,4 +15,6 @@ public interface ProductService {
 	public Map<String, Object> getProductList(Search search) throws Exception;
 	
 	public int updateProduct(Product product) throws Exception;
+	
+	public List<Product> getRandomList(int randomSize) throws Exception;
 }

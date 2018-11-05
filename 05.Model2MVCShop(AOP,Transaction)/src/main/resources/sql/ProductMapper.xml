@@ -152,4 +152,13 @@
 			) countTable						
 	 </select>
 	 
+	 <select id="getRandomList" parameterType="java.lang.Integer" resultMap="productSelectMap">
+		SELECT *
+		FROM( SELECT p.prod_no AS p_prod_no,p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date
+				FROM product p, transaction t
+				WHERE p.prod_no=t.prod_no(+) AND t.prod_no IS NULL
+				ORDER BY dbms_random.value )
+		<![CDATA[WHERE ROWNUM <= #{value}]]>
+	 </select>
+	 
 </mapper>

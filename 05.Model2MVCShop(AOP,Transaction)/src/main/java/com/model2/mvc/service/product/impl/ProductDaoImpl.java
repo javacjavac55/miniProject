@@ -48,4 +48,10 @@ public class ProductDaoImpl implements ProductDao {
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
 	}
+
+	@Override
+	public List<Product> getRandomList(int randomSize) throws Exception {
+		return sqlSession.selectList("ProductMapper.getRandomList", randomSize);
+	}	
+	
 }

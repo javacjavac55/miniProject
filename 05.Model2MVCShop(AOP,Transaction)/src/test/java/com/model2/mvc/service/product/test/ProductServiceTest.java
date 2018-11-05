@@ -114,7 +114,7 @@ public class ProductServiceTest {
 	}
 
 	// ==> 주석을 풀고 실행하면....
-	@Test
+	//@Test
 	public void testGetProductListAll() throws Exception {
 
 		Search search = new Search();
@@ -146,6 +146,13 @@ public class ProductServiceTest {
 		totalCount = (Integer) map.get("totalCount");
 		Assert.assertTrue(64 == totalCount);
 		
+	}
+	
+	@Test
+	public void testGetRandomList() throws Exception {
+		List<Product> list = productService.getRandomList(5);
+		
+		Assert.assertEquals(5, list.size());
 	}
 
 }

@@ -16,4 +16,5 @@ public interface ProductDao {
 	
 	public int getTotalCount(Search search) throws Exception;
 
+	public List<Product> getRandomList(int randomSize) throws Exception;
 }
