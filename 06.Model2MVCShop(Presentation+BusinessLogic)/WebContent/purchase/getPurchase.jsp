@@ -83,7 +83,10 @@
 	<tr>
 		<td width="104" class="ct_write">구매방법</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.paymentOption}</td>
+		<td class="ct_write01">
+			<c:if test="${purchase.paymentOption == '1'}">현금구매</c:if>
+			<c:if test="${purchase.paymentOption == '2'}">신용구매</c:if>
+		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -143,7 +146,11 @@
 	<tr>
 		<td width="104" class="ct_write">주문현황</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.tranCode}</td>
+		<td class="ct_write01">
+			<c:if test="${purchase.tranCode == '1'}">구매완료</c:if>
+			<c:if test="${purchase.tranCode == '2'}">배송중</c:if>
+			<c:if test="${purchase.tranCode == '3'}">배송완료</c:if>
+		</td>
 	</tr>
 
 	<tr>
@@ -158,7 +165,7 @@
 		<td align="right">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<c:if test="${purchase.tranCode == '구매완료'}">
+					<c:if test="${purchase.tranCode == '1'}">
 						<td width="17" height="23">
 							<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 						</td>

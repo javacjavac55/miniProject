@@ -32,6 +32,8 @@ public class Purchase {
 		this.divyAddr = divyAddr;
 	}
 	public String getDivyDate() {
+		if (divyDate!=null && divyDate.length()>=10)
+			divyDate=divyDate.substring(0,10).replace("-", "");
 		return divyDate;
 	}
 	public void setDivyDate(String divyDate) {
@@ -50,9 +52,13 @@ public class Purchase {
 		this.orderDate = orderDate;
 	}
 	public String getPaymentOption() {
+		if (paymentOption!=null)
+			paymentOption=paymentOption.trim();
 		return paymentOption;
 	}
 	public void setPaymentOption(String paymentOption) {
+		if (paymentOption!=null)
+			paymentOption=paymentOption.trim();
 		this.paymentOption = paymentOption;
 	}
 	public Product getPurchaseProd() {
@@ -74,9 +80,13 @@ public class Purchase {
 		this.receiverPhone = receiverPhone;
 	}
 	public String getTranCode() {
+		if (tranCode!=null)
+			tranCode=tranCode.trim();
 		return tranCode;
 	}
 	public void setTranCode(String tranCode) {
+		if (tranCode!=null)
+			tranCode=tranCode.trim();
 		this.tranCode = tranCode;
 	}
 	public int getTranNo() {

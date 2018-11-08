@@ -85,7 +85,6 @@
 			receiver_phone = #{receiverPhone},
 			dlvy_request = #{divyRequest} ,
 			demailaddr = #{divyAddr},
-			tran_status_code = #{tranCode},
 			dlvy_date = #{divyDate}
 		</set>
 		WHERE tran_no = #{tranNo}

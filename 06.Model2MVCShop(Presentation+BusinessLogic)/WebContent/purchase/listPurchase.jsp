@@ -39,9 +39,9 @@
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">상품명</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">회원ID</td>
+		<td class="ct_list_b" width="150">회원명</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">이름</td>
+		<td class="ct_list_b" width="150">구매자명</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">전화번호</td>
 		<td class="ct_line02"></td>
@@ -72,10 +72,16 @@
 			<td></td>
 			<td align="left">${purchase.receiverPhone}</td>
 			<td></td>
-			<td align="left">현재 ${purchase.tranCode} 상태 입니다.</td>
+			<td align="left">
+				현재 
+				<c:if test="${purchase.tranCode == '1'}">구매완료</c:if>
+				<c:if test="${purchase.tranCode == '2'}">배송중</c:if>
+				<c:if test="${purchase.tranCode == '3'}">배송완료</c:if>
+				상태 입니다.
+			</td>
 			<td></td>
 			<td align="left">
-				<c:if test="${purchase.tranCode == '배송중'}">
+				<c:if test="${purchase.tranCode == '2'}">
 					<a href="/updateTranCode.do?tranNo=${purchase.tranNo}&tranCode=3">물건도착</a>
 				</c:if>
 			</td>

@@ -94,51 +94,78 @@ public class PurchaseController {
 		
 		return modelAndView;
 	}
-	
-	/*@RequestMapping("/updateProductView.do")
-	public String updateProductView( @RequestParam("prodNo") int prodNo , Model model ) throws Exception{
-
-		System.out.println("/updateProductView.do");
-		Product product=productService.getProduct(prodNo);
-		model.addAttribute("product", product);
 		
-		return "forward:/product/updateProductView.jsp";
-	}
-	
-	@RequestMapping("/updateProduct.do")
-	public String updateProduct( @ModelAttribute("product") Product product , Model model) throws Exception{
-
-		System.out.println("/updateProduct.do");
-		productService.updateProduct(product);
+	@RequestMapping("/listPurchase.do")
+	public ModelAndView listPurchase( @ModelAttribute("search") Search search , Model model , HttpSession session) throws Exception{
 		
-		return "redirect:/getProduct.do?prodNo="+product.getProdNo()+"&menu=manage";
-	}
-
-	@RequestMapping("/listProduct.do")
-	public String listProduct( @ModelAttribute("search") Search search , Model model , HttpSession session) throws Exception{
-		
-		System.out.println("/listProduct.do");
+		System.out.println("/listPurchase.do");
 		
 		if(	search.getCurrentPage()==0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		
-		Map<String , Object> map=productService.getProductList(search);
+		Map<String , Object> map=purchaseService.getPurchaseList(search,((User)session.getAttribute("user")).getUserId());
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
-		// Model °ú View ¿¬°á
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/purchase/listPurchase.jsp");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
 		
-		String dest = "forward:/product/listProductUser.jsp";
-		if (session.getAttribute("user")!=null && ((User)session.getAttribute("user")).getRole().equals("admin"))
-			dest = "forward:/product/listProduct.jsp";
-		
-		return dest;
-	}*/
+		return modelAndView;
+	}
 	
+	@RequestMapping("/updatePurchaseView.do")
+	public ModelAndView updatePurchaseView( @RequestParam("tranNo") int tranNo ) throws Exception{
+
+		System.out.println("/updatePurchaseView.do");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/purchase/updatePurchaseView.jsp");
+		modelAndView.addObject("purchase", purchaseService.getPurchase(tranNo));
+				
+		return modelAndView;
+	}
+	
+	@RequestMapping("/updatePurchase.do")
+	public String updatePurchase( @RequestParam("tranNo") int tranNo, @ModelAttribute("purchase") Purchase purchase ) throws Exception{
+
+		System.out.println("/updatePurchase.do");
+		purchase.setTranNo(tranNo);
+		purchaseService.updatePurchase(purchase);
+		
+		
+		return "redirect:/getPurchase.do?tranNo="+tranNo;
+	}
+	
+	@RequestMapping("/updateTranCode.do")
+	public ModelAndView updateTranCode( @RequestParam("tranNo") int tranNo, @RequestParam("tranCode") String tranCode ) throws Exception{
+
+		System.out.println("/updateTranCode.do");
+		Purchase purchase = purchaseService.getPurchase(tranNo);
+		purchase.setTranCode(tranCode);
+		purchaseService.updateTranCode(purchase);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/listPurchase.do");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping("/updateTranCodeByProd.do")
+	public ModelAndView updateTranCodeByProd( @RequestParam("prodNo") int prodNo, @RequestParam("tranCode") String tranCode ) throws Exception{
+
+		System.out.println("/updateTranCodeByProd.do");
+		Purchase purchase = purchaseService.getPurchase2(prodNo);
+		purchase.setTranCode(tranCode);
+		purchaseService.updateTranCode(purchase);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/listProduct.do?menu=manage");
+		
+		return modelAndView;
+	}
 	
 }

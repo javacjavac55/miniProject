@@ -2,6 +2,9 @@ package com.model2.mvc.web.product;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,18 +54,22 @@ public class ProductController {
 	
 	@RequestMapping("/getProduct.do")
 	public String getProduct( @RequestParam("prodNo") int prodNo , @RequestParam("menu") String menu, 
-								@CookieValue(value="history", required=false) String history, Model model ) throws Exception {
+								@CookieValue(value="history", required=false) String history, HttpServletResponse response, Model model ) throws Exception {
 		
 		System.out.println("/getProduct.do");
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product", product);
 		
+		System.out.println("history: "+history);
 		//열어본 상품
 		if (history == null || history.length()==0) {
 			history=prodNo+"";
 		} else {
-			history+=prodNo;
+			history=history+","+prodNo;
 		}
+		
+		Cookie cookie = new Cookie("history",history);
+		response.addCookie(cookie);		
 		
 		return "forward:/product/getProduct.jsp";
 	}
