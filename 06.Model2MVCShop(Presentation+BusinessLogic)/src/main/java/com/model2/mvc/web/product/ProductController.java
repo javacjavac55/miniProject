@@ -60,7 +60,6 @@ public class ProductController {
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product", product);
 		
-		System.out.println("history: "+history);
 		//열어본 상품
 		if (history == null || history.length()==0) {
 			history=prodNo+"";
